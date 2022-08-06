@@ -1,2 +1,2 @@
-# Webshell-defender
+# Webshell-remover
 Free webshell detection solution
