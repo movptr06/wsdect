@@ -1,4 +1,4 @@
-# Webshell-remover
+# wsdect
 Free webshell detection solution
 
 ## Used rules
