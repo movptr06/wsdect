@@ -1,0 +1,65 @@
+#!/bin/env python3
+import sys
+import os
+
+LOCATION = "/opt/wsdect"
+
+def _help():
+    print("\n[+] Get update")
+    print("    ./wsdect update")
+    print("\n[+] Scan webshell")
+    print("    ./wsdect scan <PATH>")
+    print("\n[+] Scan and remove webshell")
+    print("    ./wsdect clean <PATH>\n")
+
+def _update():
+    os.system("cd %s; git pull; cd -" % LOCATION)
+
+def _scan(PATH, clean=False):
+    yar = os.popen("yara -r %srules/* %s" % (LOCATION + "/rules", PATH)).read()
+    yar = yar.split("\n")
+    for i in yar:
+        name = i.split()[0]
+        path = i.split()[1]
+        print(i)
+        if clean:
+            os.remove(path)
+
+def main():
+    try:
+        fp = open("/etc/shadow", "rt")
+        fp.close()
+    except:
+        print("This program requires root privileges.")
+        return -1
+    print("\n[+] wsdect 1.0")
+    if len(sys.argv) < 2:
+        print("[-] Error: arguments not found")
+        _help()
+        return -1
+    elif sys.argv[1] == "update":
+        _update()
+        return 0
+    elif sys.argv[1] == "scan":
+        if len(sys.argv) < 3:
+            print("[-] Error: arguments not found")
+            _help()
+            return -1
+        else:
+            _scan(sys.argv[2])
+            return 0
+    elif sys.argv[1] == "clean":
+        if len(sys.argv) < 3:
+            print("[-] Error: arguments not found")
+            _help()
+            return -1
+        else:
+            _scan(sys.argv[2], clean=True)
+            return 0
+    else:
+        print("[-] Error: arguments isn't valid")
+        _help()
+        return -1
+
+if __name__ == "__main__":
+    exit(main())
