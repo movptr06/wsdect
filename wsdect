@@ -17,18 +17,18 @@ def _scan(PATH):
     os.system("yara -r %s/rules/* %s 2>/dev/null" % (LOCATION, PATH))
 
 def main():
-    try:
-        fp = open("/etc/shadow", "rt")
-        fp.close()
-    except:
-        print("This program requires root privileges.")
-        return -1
     print("\n[+] wsdect 1.0")
     if len(sys.argv) < 2:
         print("[-] Error: arguments not found")
         _help()
         return -1
     elif sys.argv[1] == "update":
+        try:
+            fp = open("/etc/shadow", "rt")
+            fp.close()
+        except:
+            print("This command requires root privileges.")
+            return -1
         _update()
         return 0
     elif sys.argv[1] == "scan":
