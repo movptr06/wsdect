@@ -25,7 +25,7 @@ def _scan(PATH, clean=False):
         path = i.split()[1]
         print(i)
         if clean:
-            os.system("rm -rf", path)
+            os.system("rm -rf " + path)
 
 def main():
     try:
