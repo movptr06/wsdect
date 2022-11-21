@@ -12,3 +12,4 @@ cd /opt
 rm -rf wsdect 2>/dev/null
 git clone https://github.com/movptr06/wsdect
 cd -
+ln -s /opt/wsdect/wsdect /usr/bin/wsdect
