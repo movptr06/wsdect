@@ -14,14 +14,7 @@ def _update():
     os.system("cd %s; git pull; cd -" % LOCATION)
 
 def _scan(PATH):
-    yar = os.popen("yara -r %s/rules/* %s" % (LOCATION, PATH)).read()
-    yar = yar.split("\n")
-    for i in yar:
-        if not i:
-            return
-        name = i.split()[0]
-        path = i.split()[1]
-        print(i)
+    os.system("yara -r %s/rules/* %s 2>/dev/null" % (LOCATION, PATH))
 
 def main():
     try:
