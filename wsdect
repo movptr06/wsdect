@@ -16,9 +16,11 @@ def _update():
     os.system("cd %s; git pull; cd -" % LOCATION)
 
 def _scan(PATH, clean=False):
-    yar = os.popen("yara -r %srules/* %s" % (LOCATION + "/rules", PATH)).read()
+    yar = os.popen("yara -r %s/rules/* %s" % (LOCATION, PATH)).read()
     yar = yar.split("\n")
     for i in yar:
+        if not i:
+            return
         name = i.split()[0]
         path = i.split()[1]
         print(i)
